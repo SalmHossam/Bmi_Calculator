@@ -1,5 +1,7 @@
 import 'dart:ffi';
+import 'dart:math';
 
+import 'package:bmi_calculator/bmi_result.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 class BmiScreen extends StatefulWidget {
@@ -176,12 +178,11 @@ class _BmiScreenState extends State<BmiScreen> {
                           FloatingActionButton(
 
                             onPressed:(){
-                              setState(() {
                                 setState(() {
                                   age--;
                                 });
-                              });
                             },
+                            heroTag: 'age-',
                             mini: true,
                             child:  Icon(
                               Icons.remove,
@@ -195,6 +196,7 @@ class _BmiScreenState extends State<BmiScreen> {
                                 age++;
                               });
                             },
+                            heroTag: 'age++',
                             mini: true,
                             child:  Icon(
                               Icons.add,
@@ -238,6 +240,7 @@ class _BmiScreenState extends State<BmiScreen> {
                               });
 
                             },
+                            heroTag: 'w--',
                             mini: true,
                             child:  Icon(
                               Icons.remove,
@@ -252,6 +255,7 @@ class _BmiScreenState extends State<BmiScreen> {
                                 weight++;
                               });
                             },
+                            heroTag: 'w++',
                             mini: true,
                             child:  Icon(
                               Icons.add,
@@ -278,7 +282,18 @@ class _BmiScreenState extends State<BmiScreen> {
           color: Colors.white70,
           child: MaterialButton(
             color: Colors.white70,
-              onPressed: (){},
+              onPressed: (){
+              double result =weight/pow(Height/100,2);
+              print(result.round());
+              Navigator.push(context,
+                  MaterialPageRoute(
+                      builder:(context)=>BMIResult(
+                        age: age,
+                        isMale: isMale,
+                        result: result.round(),
+                      ),
+                  ), );
+              },
             height: 70,
           child: Text(
               'Calculate !',
@@ -289,4 +304,3 @@ class _BmiScreenState extends State<BmiScreen> {
     );
   }
 }
-
